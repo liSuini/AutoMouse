@@ -100,6 +100,7 @@ public partial class ScriptListViewModel : ObservableObject
             _scriptService.Rename(oldName, newName);
             StatusMessage = $"已重命名: {oldName} → {newName}";
             Refresh();
+            _playbackViewModel.RefreshScripts();
         }
         catch (Exception ex)
         {
