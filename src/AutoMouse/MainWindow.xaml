@@ -4,12 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:AutoMouse.ViewModels"
+        xmlns:local="clr-namespace:AutoMouse"
         mc:Ignorable="d"
         Title="AutoMouse - 鼠标键盘自动操作工具"
         Height="600" Width="800"
         MinWidth="640" MinHeight="480"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
+        <local:InverseBoolConverter x:Key="InverseBoolConverter"/>
         <Style x:Key="ActionButton" TargetType="Button">
             <Setter Property="Padding" Value="20,8"/>
             <Setter Property="FontSize" Value="14"/>
