@@ -1,0 +1,30 @@
+## IDE
+.vs/
+.idea/
+*.user
+*.suo
+
+## Build
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+*.dll
+*.exe
+*.pdb
+
+## Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+*.egg-info/
+
+## OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+## Temp
+.temp/
+.scratch/
