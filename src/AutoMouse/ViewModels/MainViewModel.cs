@@ -1,4 +1,5 @@
 using AutoMouse.Models;
+using AutoMouse.Services;
 using AutoMouse.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -30,12 +31,15 @@ public partial class MainViewModel : ObservableObject
     public RecordViewModel Record { get; }
     public PlaybackViewModel Playback { get; }
     public ScriptListViewModel ScriptList { get; }
+    public EditorViewModel Editor { get; }
+    public SettingsViewModel Settings { get; }
 
     public MainViewModel(
         IHookService hookService,
         IPlaybackService playbackService,
         IScriptService scriptService,
-        IHotkeyService hotkeyService)
+        IHotkeyService hotkeyService,
+        SettingsService settingsService)
     {
         _hookService = hookService;
         _playbackService = playbackService;
@@ -44,7 +48,12 @@ public partial class MainViewModel : ObservableObject
 
         Record = new RecordViewModel(hookService, scriptService, this);
         Playback = new PlaybackViewModel(playbackService, scriptService, this);
-        ScriptList = new ScriptListViewModel(scriptService, Playback);
+        ScriptList = new ScriptListViewModel(scriptService, Playback, this);
+        Editor = new EditorViewModel(scriptService);
+        Settings = new SettingsViewModel(settingsService, scriptService);
+
+        // 应用录制设置
+        hookService.MoveSampleInterval = settingsService.Current.Recording.MoveSampleInterval;
 
         _hookService.EventCaptured += (_, _) =>
         {

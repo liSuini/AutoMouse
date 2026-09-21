@@ -43,7 +43,7 @@
         </Border>
 
         <!-- TabControl -->
-        <TabControl Grid.Row="1" Margin="5" Padding="5">
+        <TabControl Grid.Row="1" Margin="5" Padding="5" x:Name="MainTabs">
 
             <!-- 录制 Tab -->
             <TabItem Header="录制" Padding="15,5">
@@ -147,7 +147,8 @@
                               Margin="0,0,0,10"/>
 
                     <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button Content="加载" Command="{Binding ScriptList.LoadCommand}" Style="{StaticResource ActionButton}"/>
+                        <Button Content="加载到回放" Command="{Binding ScriptList.LoadCommand}" Style="{StaticResource ActionButton}"/>
+                        <Button Content="加载到编辑器" Command="{Binding ScriptList.LoadToEditorCommand}" Style="{StaticResource ActionButton}"/>
                         <Button Content="重命名" Command="{Binding ScriptList.RenameCommand}" Style="{StaticResource ActionButton}"/>
                         <Button Content="删除" Command="{Binding ScriptList.DeleteCommand}" Style="{StaticResource ActionButton}" Background="#FFEBEE"/>
                         <Button Content="刷新" Command="{Binding ScriptList.RefreshCommand}" Style="{StaticResource ActionButton}"/>
@@ -156,6 +157,121 @@
                     <TextBlock Grid.Row="2" Text="{Binding ScriptList.StatusMessage}"
                                FontSize="12" Foreground="#666666" Margin="0,5"
                                HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                </Grid>
+            </TabItem>
+
+            <!-- 编辑 Tab -->
+            <TabItem Header="编辑" Padding="15,5">
+                <Grid Margin="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="事件编辑" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
+
+                    <DataGrid Grid.Row="1"
+                              ItemsSource="{Binding Editor.Events}"
+                              SelectedItem="{Binding Editor.SelectedEvent}"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="False"
+                              HeadersVisibility="Column"
+                              GridLinesVisibility="Horizontal"
+                              SelectionMode="Single"
+                              Margin="0,0,0,10">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="#" Binding="{Binding Timestamp}" Width="80" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="时间(ms)" Binding="{Binding Timestamp}" Width="80"/>
+                            <DataGridTextColumn Header="类型" Binding="{Binding Type}" Width="80" IsReadOnly="True"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Content="删除选中" Command="{Binding Editor.DeleteSelectedCommand}" Style="{StaticResource ActionButton}" Background="#FFEBEE"/>
+                        <Button Content="前插" Command="{Binding Editor.InsertBeforeCommand}" Style="{StaticResource ActionButton}"/>
+                        <Button Content="后插" Command="{Binding Editor.InsertAfterCommand}" Style="{StaticResource ActionButton}"/>
+                        <Button Content="上移" Command="{Binding Editor.MoveUpCommand}" Style="{StaticResource ActionButton}"/>
+                        <Button Content="下移" Command="{Binding Editor.MoveDownCommand}" Style="{StaticResource ActionButton}"/>
+                        <Button Content="保存" Command="{Binding Editor.SaveCommand}" Style="{StaticResource ActionButton}" Background="#E8F5E9"/>
+                        <Button Content="清空" Command="{Binding Editor.ClearCommand}" Style="{StaticResource ActionButton}"/>
+                    </StackPanel>
+
+                    <TextBlock Grid.Row="3" Text="{Binding Editor.StatusMessage}"
+                               FontSize="12" Foreground="#666666" Margin="0,5"
+                               HorizontalAlignment="Center"/>
+                </Grid>
+            </TabItem>
+
+            <!-- 设置 Tab -->
+            <TabItem Header="设置" Padding="15,5">
+                <Grid Margin="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- 热键配置 -->
+                    <Border Grid.Row="0" Background="#F5F5F5" Padding="15" Margin="0,0,0,10" CornerRadius="5">
+                        <StackPanel>
+                            <TextBlock Text="热键配置" FontWeight="Bold" FontSize="14" Margin="0,0,0,10"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="35"/>
+                                    <RowDefinition Height="35"/>
+                                    <RowDefinition Height="35"/>
+                                    <RowDefinition Height="35"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="开始录制:" VerticalAlignment="Center"/>
+                                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Settings.StartRecordKey}" Padding="5" VerticalContentAlignment="Center"/>
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="停止录制:" VerticalAlignment="Center"/>
+                                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Settings.StopRecordKey}" Padding="5" VerticalContentAlignment="Center"/>
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="开始回放:" VerticalAlignment="Center"/>
+                                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Settings.StartPlaybackKey}" Padding="5" VerticalContentAlignment="Center"/>
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="停止回放:" VerticalAlignment="Center"/>
+                                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Settings.StopPlaybackKey}" Padding="5" VerticalContentAlignment="Center"/>
+                            </Grid>
+                            <TextBlock Text="（热键修改后需重启应用生效）" FontSize="11" Foreground="#888888" Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 录制选项 -->
+                    <Border Grid.Row="1" Background="#F5F5F5" Padding="15" Margin="0,0,0,10" CornerRadius="5">
+                        <StackPanel>
+                            <TextBlock Text="录制选项" FontWeight="Bold" FontSize="14" Margin="0,0,0,10"/>
+                            <CheckBox Content="录制时自动隐藏窗口" IsChecked="{Binding Settings.AutoHideWindow}" Margin="0,5"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <TextBlock Text="移动采样间隔(ms):" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                <TextBox Width="60" Padding="5" Text="{Binding Settings.MoveSampleInterval}" VerticalContentAlignment="Center"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 存储路径 -->
+                    <Border Grid.Row="2" Background="#F5F5F5" Padding="15" Margin="0,0,0,10" CornerRadius="5">
+                        <StackPanel>
+                            <TextBlock Text="存储路径" FontWeight="Bold" FontSize="14" Margin="0,0,0,5"/>
+                            <TextBlock Text="{Binding Settings.ScriptDirectory}" FontSize="12" Foreground="#666666" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 按钮和状态 -->
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Content="保存设置" Command="{Binding Settings.SaveCommand}" Style="{StaticResource ActionButton}" Background="#E8F5E9"/>
+                        <Button Content="恢复默认" Command="{Binding Settings.ResetCommand}" Style="{StaticResource ActionButton}"/>
+                    </StackPanel>
+
+                    <TextBlock Grid.Row="4" Text="{Binding Settings.StatusMessage}"
+                               FontSize="12" Foreground="#666666" Margin="0,10"
+                               HorizontalAlignment="Center"/>
                 </Grid>
             </TabItem>
         </TabControl>

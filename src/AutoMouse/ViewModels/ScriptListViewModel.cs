@@ -9,6 +9,7 @@ public partial class ScriptListViewModel : ObservableObject
 {
     private readonly IScriptService _scriptService;
     private readonly PlaybackViewModel _playbackViewModel;
+    private readonly MainViewModel _mainViewModel;
 
     [ObservableProperty]
     private List<ScriptInfo> _scripts = new();
@@ -19,10 +20,11 @@ public partial class ScriptListViewModel : ObservableObject
     [ObservableProperty]
     private string _statusMessage = string.Empty;
 
-    public ScriptListViewModel(IScriptService scriptService, PlaybackViewModel playbackViewModel)
+    public ScriptListViewModel(IScriptService scriptService, PlaybackViewModel playbackViewModel, MainViewModel mainViewModel)
     {
         _scriptService = scriptService;
         _playbackViewModel = playbackViewModel;
+        _mainViewModel = mainViewModel;
         Refresh();
     }
 
@@ -59,6 +61,19 @@ public partial class ScriptListViewModel : ObservableObject
         _scriptService.Delete(SelectedScript.Name);
         StatusMessage = $"已删除: {SelectedScript.Name}";
         Refresh();
+    }
+
+    [RelayCommand]
+    private void LoadToEditor()
+    {
+        if (SelectedScript == null)
+        {
+            StatusMessage = "请先选择脚本";
+            return;
+        }
+
+        _mainViewModel.Editor.LoadScript(SelectedScript.Name);
+        StatusMessage = $"已加载到编辑器: {SelectedScript.Name}";
     }
 
     [RelayCommand]

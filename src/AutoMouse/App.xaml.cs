@@ -10,7 +10,7 @@ namespace AutoMouse;
 /// <summary>
 /// Interaction logic for App.xaml
 /// </summary>
-public partial class App : Application
+public partial class App : System.Windows.Application
 {
     public IServiceProvider Services { get; private set; } = default!;
 
@@ -21,6 +21,7 @@ public partial class App : Application
         var services = new ServiceCollection();
 
         // 注册服务
+        services.AddSingleton<SettingsService>();
         services.AddSingleton<IHookService, HookService>();
         services.AddSingleton<IPlaybackService, PlaybackService>();
         services.AddSingleton<IScriptService, ScriptService>();

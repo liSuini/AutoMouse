@@ -59,6 +59,13 @@ public partial class RecordViewModel : ObservableObject
 
             _scriptService.Save(script);
             LastSavedMessage = $"已保存: {script.Name} ({events.Count} 个事件)";
+            
+            // 刷新脚本列表
+            _main.ScriptList.RefreshCommand.Execute(null);
+            _main.Playback.RefreshScripts();
+            
+            // 自动加载到编辑器
+            _main.Editor.LoadScript(script.Name);
         }
         else
         {
