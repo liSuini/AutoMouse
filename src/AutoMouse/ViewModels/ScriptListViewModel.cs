@@ -85,11 +85,20 @@ public partial class ScriptListViewModel : ObservableObject
             return;
         }
 
-        string newName = $"重命名_{DateTime.Now:HHmmss}";
+        string oldName = SelectedScript.Name;
+
+        var dialog = new InputDialog("重命名脚本", "请输入新的脚本名称：", oldName);
+        if (dialog.ShowDialog() != true)
+            return;
+
+        string newName = dialog.InputText?.Trim() ?? "";
+        if (string.IsNullOrEmpty(newName) || newName == oldName)
+            return;
+
         try
         {
-            _scriptService.Rename(SelectedScript.Name, newName);
-            StatusMessage = $"已重命名为: {newName}";
+            _scriptService.Rename(oldName, newName);
+            StatusMessage = $"已重命名: {oldName} → {newName}";
             Refresh();
         }
         catch (Exception ex)
