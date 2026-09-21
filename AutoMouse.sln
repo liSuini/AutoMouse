@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A4907863-301D-4364-B2B8-E60DE0FA05DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoMouse", "src\AutoMouse\AutoMouse.csproj", "{5CACF9E5-4FD6-4065-85ED-3A06ED26219A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{172D698D-810B-4287-9BEF-0406F4E3ED47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoMouse.Tests", "tests\AutoMouse.Tests\AutoMouse.Tests.csproj", "{F038971B-737E-4502-8A6D-EF51A7A9BFFA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5CACF9E5-4FD6-4065-85ED-3A06ED26219A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CACF9E5-4FD6-4065-85ED-3A06ED26219A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CACF9E5-4FD6-4065-85ED-3A06ED26219A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CACF9E5-4FD6-4065-85ED-3A06ED26219A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F038971B-737E-4502-8A6D-EF51A7A9BFFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F038971B-737E-4502-8A6D-EF51A7A9BFFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F038971B-737E-4502-8A6D-EF51A7A9BFFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F038971B-737E-4502-8A6D-EF51A7A9BFFA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5CACF9E5-4FD6-4065-85ED-3A06ED26219A} = {A4907863-301D-4364-B2B8-E60DE0FA05DF}
+		{F038971B-737E-4502-8A6D-EF51A7A9BFFA} = {172D698D-810B-4287-9BEF-0406F4E3ED47}
+	EndGlobalSection
+EndGlobal
